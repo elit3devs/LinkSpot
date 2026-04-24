@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkSpot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #050a0a;
+      --bg-gradient: radial-gradient(circle at top right, #0d1a1a, #050a0a);
+      --glass: rgba(255, 255, 255, 0.02);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --accent: #34d399;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --header-height: 52px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      background: var(--bg-deep);
+      background-image: var(--bg-gradient);
+      color: var(--text);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ls-top-bar {
+      height: var(--header-height);
+      width: 100%;
+      background: rgba(5, 10, 10, 0.6);
+      backdrop-filter: blur(40px) saturate(150%);
+      -webkit-backdrop-filter: blur(40px) saturate(150%);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 20px;
+      z-index: 9999;
+      flex-shrink: 0;
+    }
+
+    .ls-brand {
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+      user-select: none;
+    }
+
+    #ls-tab-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    #ls-tab-container::-webkit-scrollbar { display: none; }
+
+    .tab-wrapper {
+      position: relative;
+      min-width: 120px;
+      max-width: 180px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ls-tab {
+      width: 100%;
+      height: 100%;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 6px;
+      padding: 0 32px 0 12px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ls-tab:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .ls-tab.active {
+      background: rgba(52, 211, 153, 0.1);
+      border-color: rgba(52, 211, 153, 0.3);
+      color: var(--accent);
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+      opacity: 0;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .tab-wrapper:hover .close-btn { opacity: 0.5; }
+    .close-btn:hover { background: rgba(255, 255, 255, 0.1); opacity: 1 !important; }
+
+    .new-tab-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 1.1rem;
+      transition: 0.2s;
+    }
+
+    .new-tab-btn:hover {
+      background: var(--glass-border);
+      color: var(--accent);
+    }
+
+    #ls-view-area {
+      flex: 1;
+      width: 100%;
+      position: relative;
+    }
+
+    #ls-dashboard {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .ls-logo-container h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(52, 211, 153, 0.15);
+    }
+
+    .ls-input-wrap {
+      width: 90%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .ls-input-wrap input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      padding: 16px 20px;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s;
+    }
+
+    .ls-input-wrap input:focus {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 20px rgba(52, 211, 153, 0.1);
+    }
+
+    .ls-bookmarks {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ls-bookmark-btn {
+      padding: 8px 14px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ls-bookmark-btn svg {
+      width: 30px;
+      height: 30px;
+      fill: currentColor;
+    }
+
+    .ls-bookmark-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.1);
+    }
+
+    .ls-discord-footer {
+      margin-top: 15px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .ls-discord-footer a {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .ls-discord-footer a:hover {
+      color: var(--accent);
+    }
+
+    #ls-viewport {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: #000;
+      display: none;
+    }
+
+    #ls-viewport.active { display: block; }
+    iframe { width: 100%; height: 100%; border: none; background: #fff; }
+  </style>
+</head>
+<body>
+  <header class="ls-top-bar">
+    <div class="ls-brand">LinkSpot</div>
+    <div id="ls-tab-container"></div>
+    <div class="new-tab-btn" id="add-tab">+</div>
+  </header>
+  
+  <div id="ls-view-area">
+    <div id="ls-viewport"></div>
+    <main id="ls-dashboard">
+      <div class="ls-logo-container">
+        <h1>LinkSpot.</h1>
+      </div>
+      <div class="ls-input-wrap">
+        <form id="ls-core-form" style="width: 100%;">
+          <input type="text" id="ls-query" placeholder="Enter URL or search query" autocomplete="off">
+        </form>
+        
+        <div class="ls-bookmarks">
+          <div class="ls-bookmark-btn" onclick="quickNav('g.html', 'Games')">
+            <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2m-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2m4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5m4-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            Games
+          </div>
+          <div class="ls-bookmark-btn" onclick="quickNav('ai.html', 'AI')">
+            <svg viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm6-8h-2v1h2V6zm0 3h-2v1h2V9zm0 3h-2v1h2v-1zm0 3h-2v1h2v-1zm-14-9h2v1H4V6zm0 3h2v1H4V9zm0 3h2v1H4v-1zm0 3h2v1H4v-1z"/></svg>
+            AI
+          </div>
+          <div class="ls-bookmark-btn" onclick="quickNav('https://youtube.com', 'YouTube')">
+            <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+            YouTube
+          </div>
+          <div class="ls-bookmark-btn" onclick="quickNav('https://twitch.tv', 'Twitch')">
+            <svg viewBox="0 0 24 24"><path d="M11.57 6h2v6h-2V6M16 6h2v6h-2V6m2-4h-14v13h3v3l3-3h3l5-5V2M19 11l-3 3h-3l-3 3v-3h-3V4h12v7z"/></svg>
+            Twitch
+          </div>
+          <div class="ls-bookmark-btn" onclick="quickNav('https://tiktok.com', 'TikTok')">
+            <svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.33-.76.51-1.14 1.43-1.06 2.33.05.74.4 1.48.98 1.93.63.51 1.49.69 2.27.49.95-.21 1.74-1 1.96-1.95.05-1.13.02-2.26.02-3.39V.02z"/></svg>
+            TikTok
+          </div>
+          <div class="ls-bookmark-btn" onclick="quickNav('https://roblox.com', 'Roblox')">
+            <svg viewBox="0 0 24 24"><path d="M18.574 21.649L3.109 18.064 5.426 3.109 20.891 6.694zM11.218 8.868L8.868 11.218 11.218 13.568 13.568 11.218z"/></svg>
+            Roblox
+          </div>
+        </div>
+
+        <div class="ls-discord-footer">
+          Join our discord: <a href="https://discord.gg/Mduyhx5u25" target="_blank">discord.gg/Mduyhx5u25</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function uvEncode(str) {
+      if (!str) return str;
+      return encodeURIComponent(str.split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join(''));
+    }
+
+    let ls_nodes = [];
+    let active_node_id = null;
+
+    function createNode(url = null, title = 'New Tab') {
+      const id = 'n_' + Date.now();
+      ls_nodes.push({ id, url });
+
+      const wrap = document.createElement('div');
+      wrap.className = 'tab-wrapper';
+      wrap.id = `w-${id}`;
+
+      const tab = document.createElement('div');
+      tab.className = 'ls-tab';
+      tab.id = `t-${id}`;
+      tab.innerText = title;
+      tab.onclick = () => switchNode(id);
+
+      const cls = document.createElement('div');
+      cls.className = 'close-btn';
+      cls.innerText = '✕';
+      cls.onclick = (e) => { e.stopPropagation(); deleteNode(id); };
+
+      wrap.appendChild(tab);
+      wrap.appendChild(cls);
+      document.getElementById('ls-tab-container').appendChild(wrap);
+
+      const ifr = document.createElement('iframe');
+      ifr.id = `f-${id}`;
+      ifr.style.display = 'none';
+      if (url) ifr.src = url;
+      document.getElementById('ls-viewport').appendChild(ifr);
+      
+      switchNode(id);
+      return id;
+    }
+
+    function quickNav(target, label) {
+      const isInternal = !target.startsWith('http');
+      const finalUrl = isInternal ? target : "/service/" + uvEncode(target);
+      const node = ls_nodes.find(n => n.id === active_node_id);
+      
+      node.url = finalUrl;
+      document.getElementById(`t-${active_node_id}`).innerText = label;
+      document.getElementById(`f-${active_node_id}`).src = finalUrl;
+      switchNode(active_node_id);
+    }
+
+    function deleteNode(id) {
+      const idx = ls_nodes.findIndex(n => n.id === id);
+      if (idx === -1) return;
+      ls_nodes.splice(idx, 1);
+      document.getElementById(`w-${id}`).remove();
+      document.getElementById(`f-${id}`).remove();
+      if (active_node_id === id) {
+        ls_nodes.length > 0 ? switchNode(ls_nodes[ls_nodes.length - 1].id) : createNode();
+      }
+    }
+
+    function switchNode(id) {
+      active_node_id = id;
+      const node = ls_nodes.find(n => n.id === id);
+      document.querySelectorAll('.ls-tab').forEach(e => e.classList.remove('active'));
+      const activeTab = document.getElementById(`t-${id}`);
+      if(activeTab) activeTab.classList.add('active');
+      document.querySelectorAll('iframe').forEach(f => f.style.display = 'none');
+      const activeFrame = document.getElementById(`f-${id}`);
+      if(activeFrame) activeFrame.style.display = 'block';
+      
+      if (node && node.url) {
+        document.getElementById('ls-viewport').classList.add('active');
+        document.getElementById('ls-dashboard').style.display = 'none';
+      } else {
+        document.getElementById('ls-viewport').classList.remove('active');
+        document.getElementById('ls-dashboard').style.display = 'flex';
+        setTimeout(() => document.getElementById('ls-query').focus(), 50);
+      }
+    }
+
+    document.getElementById('ls-core-form').onsubmit = (e) => {
+      e.preventDefault();
+      const val = document.getElementById('ls-query').value.trim();
+      if (!val) return;
+
+      let target = val;
+      if (!target.includes('.') || target.includes(' ')) {
+        target = "https://search.brave.com/search?q=" + encodeURIComponent(target);
+      } else if (!/^https?:\/\//i.test(target)) {
+        target = "https://" + target;
+      }
+
+      quickNav(target, val.replace(/^https?:\/\//, '').split('/')[0]);
+      document.getElementById('ls-query').value = "";
+    };
+
+    document.getElementById('add-tab').onclick = () => createNode();
+    createNode();
+  </script>
+</body>
+</html>

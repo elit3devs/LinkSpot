@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkSpot | Arcade</title>
+    <style>
+        :root {
+            --bg: #0f1717;
+            --emerald: #34d399;
+            --card: #141d1d;
+            --border: #1a2626;
+        }
+
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: var(--emerald); font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; letter-spacing: -1px; }
+        #find { width: 100%; max-width: 500px; padding: 15px; background: var(--card); border: 2px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 50px; outline: none; }
+        #find:focus { border-color: var(--emerald); }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: 0.2s ease; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); border-color: var(--emerald); }
+        .img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; background-color: #000; }
+        .name { padding: 12px; font-size: 0.75rem; font-weight: 700; text-align: center; color: #888; text-transform: uppercase; }
+        .card:hover .name { color: var(--emerald); }
+
+        #view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: none; flex-direction: column; z-index: 9999; }
+        .bar { padding: 15px; background: #0a0f0f; display: flex; gap: 10px; border-bottom: 1px solid var(--border); }
+        .btn { background: #1a2626; border: 1px solid #2a3a3a; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 800; }
+        .btn:hover { background: var(--emerald); color: #000; }
+        iframe { flex: 1; border: none; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <h1>LinkSpot</h1>
+    <input type="text" id="find" placeholder="SEARCH ARCHIVES...">
+
+    <div class="grid">
+        <div class="card" data-s="games/1v1.LoL.html"><div class="img" style="background-image: url('images/1v1-lol.png')"></div><div class="name">1v1 LoL</div></div>
+        <div class="card" data-s="games/Slope.html"><div class="img" style="background-image: url('images/Slope.png')"></div><div class="name">Slope</div></div>
+        
+        <div class="card" data-s="games/Bank Robbery.html"><div class="img" style="background-image: url('images/Bank Robbery.png')"></div><div class="name">Bank Robbery</div></div>
+        <div class="card" data-s="games/Bank Robbery 2.html"><div class="img" style="background-image: url('images/Bank Robbery 2.png')"></div><div class="name">Bank Robbery 2</div></div>
+        <div class="card" data-s="games/Bank Robbery 3.html"><div class="img" style="background-image: url('images/Bank Robbery 3.png')"></div><div class="name">Bank Robbery 3</div></div>
+        <div class="card" data-s="games/Escape Road.html"><div class="img" style="background-image: url('images/Escape Road.png')"></div><div class="name">Escape Road</div></div>
+        <div class="card" data-s="games/Escape Road 2.html"><div class="img" style="background-image: url('images/Escape Road 2.png')"></div><div class="name">Escape Road 2</div></div>
+        
+        <div class="card" data-s="games/Five Nights at Freddys.html"><div class="img" style="background-image: url('images/Five Nights at Freddys.png')"></div><div class="name">FNAF 1</div></div>
+        <div class="card" data-s="games/Five Nights at Freddys 2.html"><div class="img" style="background-image: url('images/Five Nights at Freddys 2.png')"></div><div class="name">FNAF 2</div></div>
+        <div class="card" data-s="games/Five Nights at Freddys 3.html"><div class="img" style="background-image: url('images/Five Nights at Freddys 3.png')"></div><div class="name">FNAF 3</div></div>
+        <div class="card" data-s="games/Five Nights at Freddys 4.html"><div class="img" style="background-image: url('images/Five Nights at Freddys 4.png')"></div><div class="name">FNAF 4</div></div>
+        <div class="card" data-s="games/Five Nights at Freddys Sister Location.html"><div class="img" style="background-image: url('images/Five Nights at Freddys Sister Location.png')"></div><div class="name">FNAF SL</div></div>
+        <div class="card" data-s="games/Five Nights at Freddys Pizza Simulator.html"><div class="img" style="background-image: url('images/Five Nights at Freddys Pizza Simulator.png')"></div><div class="name">FNAF 6</div></div>
+        <div class="card" data-s="games/Five Nights at Freddy's_ Ultimate Custom Night.html"><div class="img" style="background-image: url('images/Five Nights at Freddys Ultimate Custom Night.png')"></div><div class="name">FNAF UCN</div></div>
+        <div class="card" data-s="games/Five Nights at Epsteins.html"><div class="img" style="background-image: url('images/Five Nights at Epsteins.png')"></div><div class="name">FNAE</div></div>
+        <div class="card" data-s="games/Five Nights at Candy's.html"><div class="img" style="background-image: url('images/Five Nights at Candy\'s.png')"></div><div class="name">FNAC</div></div>
+
+        <div class="card" data-s="games/64 in 1 NES.html"><div class="img" style="background-image: url('images/64 in 1 NES.png')"></div><div class="name">64 in 1 NES</div></div>
+        <div class="card" data-s="games/DOOM.html"><div class="img" style="background-image: url('images/DOOM.png')"></div><div class="name">DOOM</div></div>
+        <div class="card" data-s="games/Half Life.html"><div class="img" style="background-image: url('images/Half Life.png')"></div><div class="name">Half Life</div></div>
+        <div class="card" data-s="games/ULTRAKILL.html"><div class="img" style="background-image: url('images/ULTRAKILL.png')"></div><div class="name">ULTRAKILL</div></div>
+        
+        <div class="card" data-s="games/2048.html"><div class="img" style="background-image: url('images/2048.png')"></div><div class="name">2048</div></div>
+        <div class="card" data-s="games/Tetris.html"><div class="img" style="background-image: url('images/Tetris.png')"></div><div class="name">Tetris</div></div>
+        <div class="card" data-s="games/WebFishing.html"><div class="img" style="background-image: url('images/WebFishing.png')"></div><div class="name">WebFishing</div></div>
+        <div class="card" data-s="games/Papa's Freezeria.html"><div class="img" style="background-image: url('images/Papa\'s Freezeria.png')"></div><div class="name">Freezeria</div></div>
+        <div class="card" data-s="games/Cooking Mama.html"><div class="img" style="background-image: url('images/Cooking Mama.png')"></div><div class="name">Cooking Mama</div></div>
+        
+        <div class="card" data-s="games/Bad Parenting 1.html"><div class="img" style="background-image: url('images/Bad Parenting 1.png')"></div><div class="name">Bad Parenting 1</div></div>
+        <div class="card" data-s="games/That's Not My Neighbor.html"><div class="img" style="background-image: url('images/That\'s Not My Neighbor.png')"></div><div class="name">Not My Neighbor</div></div>
+        <div class="card" data-s="games/Bendy and the Ink Machine.html"><div class="img" style="background-image: url('images/Bendy and the Ink Machine.png')"></div><div class="name">Bendy Ink</div></div>
+        <div class="card" data-s="games/Buckshot Roulette.html"><div class="img" style="background-image: url('images/Buckshot Roulette.png')"></div><div class="name">Buckshot</div></div>
+        <div class="card" data-s="games/windowkill/index.html"><div class="img" style="background-image: url('images/windowkill.png')"></div><div class="name">Windowkill</div></div>
+
+        <div class="card" data-s="games/CircloO.html"><div class="img" style="background-image: url('images/CircloO.png')"></div><div class="name">CircloO</div></div>
+        <div class="card" data-s="games/Clash Of Vikings.html"><div class="img" style="background-image: url('images/Clash Of Vikings.png')"></div><div class="name">Clash Of Vikings</div></div>
+        <div class="card" data-s="games/Crossy Road.html"><div class="img" style="background-image: url('images/Crossy Road.png')"></div><div class="name">Crossy Road</div></div>
+        <div class="card" data-s="games/Death Run 3D.html"><div class="img" style="background-image: url('images/Death Run 3D.png')"></div><div class="name">Death Run 3D</div></div>
+        <div class="card" data-s="games/Find the Alien.html"><div class="img" style="background-image: url('images/Find the Alien.png')"></div><div class="name">Find the Alien</div></div>
+        <div class="card" data-s="games/Fitness Empire.html"><div class="img" style="background-image: url('images/FItness Empire.png')"></div><div class="name">Fitness Empire</div></div>
+        <div class="card" data-s="games/Antonblast.html"><div class="img" style="background-image: url('images/Antonblast.png')"></div><div class="name">Antonblast</div></div>
+        <div class="card" data-s="games/Celeste.html"><div class="img" style="background-image: url('images/Celeste.png')"></div><div class="name">Celeste</div></div>
+        <div class="card" data-s="games/Clover Pit.html"><div class="img" style="background-image: url('images/Clover Pit.png')"></div><div class="name">Clover Pit</div></div>
+        <div class="card" data-s="games/Cuphead.html"><div class="img" style="background-image: url('images/Cuphead.png')"></div><div class="name">Cuphead</div></div>
+        <div class="card" data-s="games/Bad Ice Cream.html"><div class="img" style="background-image: url('images/Bad Ice Cream.png')"></div><div class="name">Bad Ice Cream</div></div>
+        <div class="card" data-s="games/Bad Ice Cream 2.html"><div class="img" style="background-image: url('images/Bad Ice Cream 2.png')"></div><div class="name">Bad Ice Cream 2</div></div>
+        <div class="card" data-s="games/Bad Ice Cream 3.html"><div class="img" style="background-image: url('images/Bad Ice Cream 3.png')"></div><div class="name">Bad Ice Cream 3</div></div>
+        <div class="card" data-s="games/Geometry Dash World.html"><div class="img" style="background-image: url('images/Geometry Dash World.webp')"></div><div class="name">GD World</div></div>
+        <div class="card" data-s="games/BlackJack.html"><div class="img" style="background-image: url('images/BlackJack.png')"></div><div class="name">BlackJack</div></div>
+        <div class="card" data-s="games/Block Blast.html"><div class="img" style="background-image: url('images/Block Blast.png')"></div><div class="name">Block Blast</div></div>
+        <div class="card" data-s="games/Basketball Stars.html"><div class="img" style="background-image: url('images/Basketball Stars.png')"></div><div class="name">Basketball Stars</div></div>
+        <div class="card" data-s="games/Crazy Cattle 3D.html"><div class="img" style="background-image: url('images/Crazy Cattle 3D.png')"></div><div class="name">Crazy Cattle 3D</div></div>
+        <div class="card" data-s="games/Cut the Rope.html"><div class="img" style="background-image: url('images/Cut the Rope.png')"></div><div class="name">Cut the Rope</div></div>
+        <div class="card" data-s="games/Dadish.html"><div class="img" style="background-image: url('images/Dadish.png')"></div><div class="name">Dadish</div></div>
+        <div class="card" data-s="games/Doodle Jump.html"><div class="img" style="background-image: url('images/Doodle Jump.png')"></div><div class="name">Doodle Jump</div></div>
+        <div class="card" data-s="games/Draw Joust.html"><div class="img" style="background-image: url('images/Draw Joust.png')"></div><div class="name">Draw Joust</div></div>
+        <div class="card" data-s="games/Drift Boss.html"><div class="img" style="background-image: url('images/Drift Boss.png')"></div><div class="name">Drift Boss</div></div>
+        <div class="card" data-s="games/A Dance of Fire and Ice.html"><div class="img" style="background-image: url('images/A Dance of Fire and Ice.png')"></div><div class="name">ADOFAI</div></div>
+        <div class="card" data-s="games/Fruit Ninja.html"><div class="img" style="background-image: url('images/Fruit Ninja.png')"></div><div class="name">Fruit Ninja</div></div>
+        <div class="card" data-s="games/Andy's Apple Farm.html"><div class="img" style="background-image: url('images/Andy\'s Apple Farm.png')"></div><div class="name">Andy</div></div>
+        <div class="card" data-s="games/Untitled Goose Game.html"><div class="img" style="background-image: url('images/Untitled Goose Game.png')"></div><div class="name">Goose Game</div></div>
+        <div class="card" data-s="games/Brawl Simulator 3D.html"><div class="img" style="background-image: url('images/Brawl Simulator 3D.png')"></div><div class="name">Brawl Sim</div></div>
+        <div class="card" data-s="games/Hobo 1.html"><div class="img" style="background-image: url('images/Hobo 1.png')"></div><div class="name">Hobo 1</div></div>
+        <div class="card" data-s="games/Papers, Please.html"><div class="img" style="background-image: url('images/Papers, Please.png')"></div><div class="name">Papers, Please</div></div>
+
+        <div class="card" data-s="games/Run 3.html"><div class="img" style="background-image: url('images/Run 3.png')"></div><div class="name">Run 3</div></div>
+        <div class="card" data-s="games/Steal A Brainrot.html"><div class="img" style="background-image: url('images/Steal A Brainrot.png')"></div><div class="name">Brainrot</div></div>
+        <div class="card" data-s="games/Idle Breakout.html"><div class="img" style="background-image: url('images/Idle Breakout.png')"></div><div class="name">Idle Breakout</div></div>
+    </div>
+
+    <div id="view">
+        <div class="bar">
+            <button class="btn" onclick="cls()">CLOSE</button>
+            <button class="btn" onclick="fs()">FULLSCREEN</button>
+            <button class="btn" onclick="tab()">OPEN TAB</button>
+        </div>
+        <iframe id="f" src=""></iframe>
+    </div>
+
+    <script>
+        const q = document.getElementById('find');
+        const cards = document.querySelectorAll('.card');
+        const v = document.getElementById('view');
+        const f = document.getElementById('f');
+
+        q.oninput = () => {
+            let t = q.value.toLowerCase();
+            cards.forEach(c => {
+                c.style.display = c.innerText.toLowerCase().includes(t) ? 'flex' : 'none';
+            });
+        };
+
+        cards.forEach(c => {
+            c.onclick = () => { f.src = c.dataset.s; v.style.display = 'flex'; };
+        });
+
+        function cls() { v.style.display = 'none'; f.src = ''; }
+        function fs() { if(f.requestFullscreen) f.requestFullscreen(); }
+        function tab() { if(f.src) window.open(f.src, '_blank'); }
+    </script>
+</body>
+</html>
