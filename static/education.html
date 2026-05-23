@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkSpot AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050a0a;
+            --bg-gradient: radial-gradient(circle at top right, #0d1a1a, #050a0a);
+            --accent: #34d399;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+            background: var(--bg-deep);
+            background-image: var(--bg-gradient);
+            color: var(--text);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .coming-soon-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .back-link {
+            margin-top: 30px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            p { font-size: 1rem; }
+            .coming-soon-container { padding: 30px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            p { font-size: 0.9rem; }
+            .coming-soon-container { padding: 20px 15px; }
+            .back-link { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="coming-soon-container">
+        <h1>AI Chat</h1>
+        <p>Coming Soon</p>
+        <p>Elit3 is working on bringing you a awesome experience with an ai chatbot. Stay tuned!</p>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'C') || (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+        }
+    });
+    setInterval(() => {
+        const devtools = /./;
+        devtools.toString = function() {
+            window.location.href = 'https://google.com';
+        };
+        console.log('%cStop!', 'color: red; font-size: 50px; font-weight: bold;');
+    }, 1000);
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        console.log('Service Worker registered');
+      }).catch(err => {
+        console.log('Service Worker registration failed');
+      });
+    }
+    </script>
+</body>
+</html>

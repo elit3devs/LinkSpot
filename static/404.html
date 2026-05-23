@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linkspot PageConnect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --bg-gradient: radial-gradient(circle at top right, #0d1a1a, #050a0a);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #34d399;
+            --text-main: #e2e8f0;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            background: #050a0a;
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .ls-container {
+            width: 90%;
+            max-width: 440px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+        .error-code {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -3px;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(52, 211, 153, 0.2);
+        }
+        .error-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        .error-message {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+        .ls-btn {
+            background: var(--accent);
+            color: #050a0a;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .ls-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+        }
+        .abort-link {
+            display: block;
+            margin-top: 25px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+        .abort-link:hover { color: var(--danger); }
+        .ls-pulse {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            gap: 6px;
+        }
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            animation: pulse-grow 1.4s infinite ease-in-out;
+        }
+        .pulse-dot:nth-child(2) { animation-delay: 0.2s; }
+        .pulse-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes pulse-grow {
+            0%, 100% { transform: scale(0.8); opacity: 0.2; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="ls-container animate__animated animate__fadeIn">
+        <div id="error-content">
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Endpoint missing</h2>
+            <p class="error-message">We couldn't resolve this location within the LinkSpot network.</p>
+            <a href="javascript:void(0)" onclick="gohome();" class="ls-btn">Go Back</a>
+        </div>
+        <div id="proxy-content" class="hidden">
+            <h1 class="error-code" style="font-size: 3.5rem;">LinkSpot</h1>
+            <h2 class="error-title">Connecting</h2>
+            <p class="error-message">Establishing connection...</p>
+            <form id="regform">
+                <button id="uv-register-sw" class="ls-btn" type="submit" onclick="window.location.reload(1);">Connect</button>
+            </form>
+            <div class="ls-pulse">
+                <div class="pulse-dot"></div>
+                <div class="pulse-dot"></div>
+                <div class="pulse-dot"></div>
+            </div>
+            <a href="javascript:void(0)" onclick="gohome();" class="abort-link">Abort</a>
+        </div>
+    </div>
+    <script>
+        if(window.location.href.includes("/service/")) {
+            document.getElementById("error-content").classList.add("hidden");
+            document.getElementById("proxy-content").classList.remove("hidden");
+        }
+        function gohome() { window.location.href = window.location.origin; }
+    </script>
+    <script src="/uv/uv.bundle.js" defer></script>
+    <script src="/uv/uv.config.js" defer></script>
+    <script src="/register-sw.js" defer></script>
+    <script src="/search.js" defer></script>
+    <script src="/scripts/load.js" defer></script>
+    <script src="/error.js" defer></script>
+</body>
+</html>

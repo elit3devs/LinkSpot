@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkSpot | Arcade</title>
+    <style>
+        :root {
+            --bg: #0f1717;
+            --emerald: #34d399;
+            --card: #141d1d;
+            --border: #1a2626;
+        }
+
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: var(--emerald); font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; letter-spacing: -1px; }
+        #find { width: 100%; max-width: 500px; padding: 15px; background: var(--card); border: 2px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 50px; outline: none; }
+        #find:focus { border-color: var(--emerald); }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: 0.2s ease; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); border-color: var(--emerald); }
+        .img { width: 100%; aspect-ratio: 1/1; background-size: cover; background-position: center; background-color: #000; }
+        .name { padding: 12px; font-size: 0.75rem; font-weight: 700; text-align: center; color: #888; text-transform: uppercase; }
+        .card:hover .name { color: var(--emerald); }
+
+        #view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: none; flex-direction: column; z-index: 9999; }
+        .bar { padding: 15px; background: #0a0f0f; display: flex; gap: 10px; border-bottom: 1px solid var(--border); }
+        .btn { background: #1a2626; border: 1px solid #2a3a3a; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 800; }
+        .btn:hover { background: var(--emerald); color: #000; }
+        iframe { flex: 1; border: none; width: 100%; }
+        .simple-nav { display: flex; gap: 10px; padding: 15px; background: #0a0f0f; border-bottom: 1px solid #2a3a3a; }
+        .simple-nav a { color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; }
+        .simple-nav a:hover { background: #1a2626; }
+        .simple-nav a.active { background: var(--emerald); color: #000; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.5rem; }
+            #find { font-size: 14px; padding: 10px 14px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .card { border-radius: 8px; }
+            .name { font-size: 0.65rem; padding: 8px; }
+            .bar { padding: 10px; }
+            .btn { font-size: 10px; padding: 6px 12px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.2rem; }
+            #find { font-size: 13px; padding: 8px 12px; }
+            .grid { grid-template-columns: 1fr; gap: 10px; }
+            .simple-nav { padding: 10px; gap: 6px; }
+            .simple-nav a { font-size: 12px; padding: 6px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="simple-nav">
+        <a href="index.html">Home</a>
+        <a href="g.html" class="active">Games</a>
+        <a href="a.html">Apps</a>
+        <a href="s.html">Settings</a>
+    </nav>
+
+    <h1>LinkSpot</h1>
+    <input type="text" id="find" placeholder="SEARCH">
+
+    <div class="grid">
+        <div class="card" data-s="https://1v1.lol"><div class="img" style="background-image: url('images/1v1-lol.png')"></div><div class="name">1v1 LoL</div></div>
+        <div class="card" data-s="https://slope-game.io"><div class="img" style="background-image: url('images/Slope.png')"></div><div class="name">Slope</div></div>
+        
+        <div class="card" data-s="https://roblox.com"><div class="img" style="background-image: url('images/Bank Robbery.png')"></div><div class="name">Roblox</div></div>
+        <div class="card" data-s="https://poki.com"><div class="img" style="background-image: url('images/Escape Road.png')"></div><div class="name">Poki Games</div></div>
+        <div class="card" data-s="https://crazygames.com"><div class="img" style="background-image: url('images/Escape Road 2.png')"></div><div class="name">CrazyGames</div></div>
+        
+        <div class="card" data-s="https://fnaf-world.com"><div class="img" style="background-image: url('images/Five Nights at Freddys.png')"></div><div class="name">FNAF World</div></div>
+        <div class="card" data-s="https://scratch.mit.edu"><div class="img" style="background-image: url('images/Five Nights at Freddys 2.png')"></div><div class="name">Scratch</div></div>
+        <div class="card" data-s="https://miniclip.com"><div class="img" style="background-image: url('images/Five Nights at Freddys 3.png')"></div><div class="name">Miniclip</div></div>
+        <div class="card" data-s="https://addictinggames.com"><div class="img" style="background-image: url('images/Five Nights at Freddys 4.png')"></div><div class="name">Addicting Games</div></div>
+        <div class="card" data-s="https://coolmathgames.com"><div class="img" style="background-image: url('images/Five Nights at Freddys Sister Location.png')"></div><div class="name">Cool Math</div></div>
+        <div class="card" data-s="https://armorgames.com"><div class="img" style="background-image: url('images/Five Nights at Freddys Pizza Simulator.png')"></div><div class="name">Armor Games</div></div>
+        <div class="card" data-s="https://kongregate.com"><div class="img" style="background-image: url('images/Five Nights at Freddys Ultimate Custom Night.png')"></div><div class="name">Kongregate</div></div>
+        <div class="card" data-s="https://y8.com"><div class="img" style="background-image: url('images/Five Nights at Epsteins.png')"></div><div class="name">Y8 Games</div></div>
+        <div class="card" data-s="https://itch.io"><div class="img" style="background-image: url('images/Five Nights at Candy\'s.png')"></div><div class="name">itch.io</div></div>
+
+        <div class="card" data-s="https://retrogames.cc"><div class="img" style="background-image: url('images/64 in 1 NES.png')"></div><div class="name">Retro Games</div></div>
+        <div class="card" data-s="https://classicreload.com"><div class="img" style="background-image: url('images/DOOM.png')"></div><div class="name">Classic Reload</div></div>
+        <div class="card" data-s="https://archive.org"><div class="img" style="background-image: url('images/Half Life.png')"></div><div class="name">Internet Archive</div></div>
+        <div class="card" data-s="https://steamunlocked.net"><div class="img" style="background-image: url('images/ULTRAKILL.png')"></div><div class="name">Steam Unlocked</div></div>
+        
+        <div class="card" data-s="https://2048game.com"><div class="img" style="background-image: url('images/2048.png')"></div><div class="name">2048</div></div>
+        <div class="card" data-s="https://tetris.com"><div class="img" style="background-image: url('images/Tetris.png')"></div><div class="name">Tetris</div></div>
+        <div class="card" data-s="https://poki.com/en/fishing"><div class="img" style="background-image: url('images/WebFishing.png')"></div><div class="name">Fishing Games</div></div>
+        <div class="card" data-s="https://poki.com/en/cooking"><div class="img" style="background-image: url('images/Papa\'s Freezeria.png')"></div><div class="name">Cooking Games</div></div>
+        <div class="card" data-s="https://poki.com/en/girl"><div class="img" style="background-image: url('images/Cooking Mama.png')"></div><div class="name">Girl Games</div></div>
+        
+        <div class="card" data-s="https://poki.com/en/horror"><div class="img" style="background-image: url('images/Bad Parenting 1.png')"></div><div class="name">Horror Games</div></div>
+        <div class="card" data-s="https://poki.com/en/escape"><div class="img" style="background-image: url('images/That\'s Not My Neighbor.png')"></div><div class="name">Escape Games</div></div>
+        <div class="card" data-s="https://poki.com/en/action"><div class="img" style="background-image: url('images/Bendy and the Ink Machine.png')"></div><div class="name">Action Games</div></div>
+        <div class="card" data-s="https://poki.com/en/shooting"><div class="img" style="background-image: url('images/Buckshot Roulette.png')"></div><div class="name">Shooting Games</div></div>
+        <div class="card" data-s="https://poki.com/en/running"><div class="img" style="background-image: url('images/windowkill.png')"></div><div class="name">Running Games</div></div>
+
+        <div class="card" data-s="https://poki.com/en/arcade"><div class="img" style="background-image: url('images/CircloO.png')"></div><div class="name">Arcade Games</div></div>
+        <div class="card" data-s="https://poki.com/en/multiplayer"><div class="img" style="background-image: url('images/Clash Of Vikings.png')"></div><div class="name">Multiplayer</div></div>
+        <div class="card" data-s="https://poki.com/en/skill"><div class="img" style="background-image: url('images/Crossy Road.png')"></div><div class="name">Skill Games</div></div>
+        <div class="card" data-s="https://poki.com/en/3d"><div class="img" style="background-image: url('images/Death Run 3D.png')"></div><div class="name">3D Games</div></div>
+        <div class="card" data-s="https://poki.com/en/adventure"><div class="img" style="background-image: url('images/Find the Alien.png')"></div><div class="name">Adventure</div></div>
+        <div class="card" data-s="https://poki.com/en/sports"><div class="img" style="background-image: url('images/FItness Empire.png')"></div><div class="name">Sports Games</div></div>
+        <div class="card" data-s="https://poki.com/en/platform"><div class="img" style="background-image: url('images/Antonblast.png')"></div><div class="name">Platform</div></div>
+        <div class="card" data-s="https://poki.com/en/puzzle"><div class="img" style="background-image: url('images/Celeste.png')"></div><div class="name">Puzzle Games</div></div>
+        <div class="card" data-s="https://poki.com/en/logic"><div class="img" style="background-image: url('images/Clover Pit.png')"></div><div class="name">Logic Games</div></div>
+        <div class="card" data-s="https://poki.com/en/car"><div class="img" style="background-image: url('images/Cuphead.png')"></div><div class="name">Car Games</div></div>
+        <div class="card" data-s="https://poki.com/en/racing"><div class="img" style="background-image: url('images/Bad Ice Cream.png')"></div><div class="name">Racing Games</div></div>
+        <div class="card" data-s="https://poki.com/en/driving"><div class="img" style="background-image: url('images/Bad Ice Cream 2.png')"></div><div class="name">Driving Games</div></div>
+        <div class="card" data-s="https://poki.com/en/stickman"><div class="img" style="background-image: url('images/Bad Ice Cream 3.png')"></div><div class="name">Stickman</div></div>
+        <div class="card" data-s="https://poki.com/en/music"><div class="img" style="background-image: url('images/Geometry Dash World.webp')"></div><div class="name">Music Games</div></div>
+        <div class="card" data-s="https://poki.com/en/casino"><div class="img" style="background-image: url('images/BlackJack.png')"></div><div class="name">Casino Games</div></div>
+        <div class="card" data-s="https://poki.com/en/board"><div class="img" style="background-image: url('images/Block Blast.png')"></div><div class="name">Board Games</div></div>
+        <div class="card" data-s="https://poki.com/en/basketball"><div class="img" style="background-image: url('images/Basketball Stars.png')"></div><div class="name">Basketball</div></div>
+        <div class="card" data-s="https://poki.com/en/animal"><div class="img" style="background-image: url('images/Crazy Cattle 3D.png')"></div><div class="name">Animal Games</div></div>
+        <div class="card" data-s="https://poki.com/en/cut-the-rope"><div class="img" style="background-image: url('images/Cut the Rope.png')"></div><div class="name">Cut the Rope</div></div>
+        <div class="card" data-s="https://poki.com/en/dadish"><div class="img" style="background-image: url('images/Dadish.png')"></div><div class="name">Dadish</div></div>
+        <div class="card" data-s="https://poki.com/en/jump"><div class="img" style="background-image: url('images/Doodle Jump.png')"></div><div class="name">Jump Games</div></div>
+        <div class="card" data-s="https://poki.com/en/drawing"><div class="img" style="background-image: url('images/Draw Joust.png')"></div><div class="name">Drawing</div></div>
+        <div class="card" data-s="https://poki.com/en/drift"><div class="img" style="background-image: url('images/Drift Boss.png')"></div><div class="name">Drift Games</div></div>
+        <div class="card" data-s="https://poki.com/en/rhythm"><div class="img" style="background-image: url('images/A Dance of Fire and Ice.png')"></div><div class="name">Rhythm Games</div></div>
+        <div class="card" data-s="https://poki.com/en/fruit-ninja"><div class="img" style="background-image: url('images/Fruit Ninja.png')"></div><div class="name">Fruit Ninja</div></div>
+        <div class="card" data-s="https://poki.com/en/andy"><div class="img" style="background-image: url('images/Andy\'s Apple Farm.png')"></div><div class="name">Andy's Farm</div></div>
+        <div class="card" data-s="https://poki.com/en/untitled-goose"><div class="img" style="background-image: url('images/Untitled Goose Game.png')"></div><div class="name">Goose Game</div></div>
+        <div class="card" data-s="https://poki.com/en/brawl"><div class="img" style="background-image: url('images/Brawl Simulator 3D.png')"></div><div class="name">Brawl Games</div></div>
+        <div class="card" data-s="https://poki.com/en/fighting"><div class="img" style="background-image: url('images/Hobo 1.png')"></div><div class="name">Fighting</div></div>
+        <div class="card" data-s="https://poki.com/en/simulation"><div class="img" style="background-image: url('images/Papers, Please.png')"></div><div class="name">Simulation</div></div>
+
+        <div class="card" data-s="https://poki.com/en/run"><div class="img" style="background-image: url('images/Run 3.png')"></div><div class="name">Run 3</div></div>
+        <div class="card" data-s="https://poki.com"><div class="img" style="background-image: url('images/Steal A Brainrot.png')"></div><div class="name">Poki All</div></div>
+        <div class="card" data-s="https://coolmathgames.com/0-idle-breakout"><div class="img" style="background-image: url('images/Idle Breakout.png')"></div><div class="name">Idle Breakout</div></div>
+    </div>
+
+    <div id="view">
+        <div class="bar">
+            <button class="btn" onclick="cls()">CLOSE</button>
+            <button class="btn" onclick="fs()">FULLSCREEN</button>
+            <button class="btn" onclick="tab()">OPEN TAB</button>
+        </div>
+        <iframe id="f" src=""></iframe>
+    </div>
+
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'C') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
+        setInterval(() => {
+            const devtools = /./;
+            devtools.toString = function() {
+                window.location.href = 'https://google.com';
+            };
+            console.log('%cStop!', 'color: red; font-size: 50px; font-weight: bold;');
+        }, 1000);
+
+        const settings = JSON.parse(localStorage.getItem('linkspot_settings') || '{}');
+        if (settings.accentColor) {
+            document.documentElement.style.setProperty('--accent', settings.accentColor);
+            document.documentElement.style.setProperty('--bg-gradient', `radial-gradient(circle at top right, ${settings.accentColor}33, #050a0a)`);
+        }
+
+        const q = document.getElementById('find');
+        const cards = document.querySelectorAll('.card');
+        const v = document.getElementById('view');
+        const f = document.getElementById('f');
+
+        q.oninput = () => {
+            let t = q.value.toLowerCase();
+            cards.forEach(c => {
+                c.style.display = c.innerText.toLowerCase().includes(t) ? 'flex' : 'none';
+            });
+        };
+
+        cards.forEach(c => {
+            c.onclick = () => { 
+                const gameUrl = c.dataset.s;
+                f.src = gameUrl;
+                v.style.display = 'flex'; 
+            };
+        });
+
+        function uvEncode(str) {
+            if (!str) return str;
+            return encodeURIComponent(str.split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join(''));
+        }
+
+        function cls() { v.style.display = 'none'; f.src = ''; }
+        function fs() { if(f.requestFullscreen) f.requestFullscreen(); }
+        function tab() { if(f.src) window.open(f.src, '_blank'); }
+
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js').then(reg => {
+            console.log('Service Worker registered');
+          }).catch(err => {
+            console.log('Service Worker registration failed');
+          });
+        }
+    </script>
+</body>
+</html>
