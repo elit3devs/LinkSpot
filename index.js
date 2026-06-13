@@ -1,7 +1,6 @@
 import http from "node:http";
 import path from "node:path";
 import { createBareServer } from "@tomphttp/bare-server-node";
-import { Ultraviolet } from "@titaniumnetwork-dev/ultraviolet";
 import chalk from "chalk";
 import express from "express";
 import basicAuth from "express-basic-auth";
@@ -14,11 +13,8 @@ const server = http.createServer();
 const app = express();
 const bareServer = createBareServer("/edu/", {
   logLevel: "info",
-  localAddress: "0.0.0.0",
-  directory: "/bare/"
+  localAddress: "0.0.0.0"
 });
-
-const uv = new Ultraviolet("https://raw.githubusercontent.com/titaniumnetwork-dev/Ultraviolet-Static/main/uv/uv.config.js");
 
 const PORT = process.env.PORT || 80;
 
@@ -42,16 +38,6 @@ app.use(
 );
 
 app.get('/scramjet/*', (req, res) => {
-  const encodedUrl = req.params[0];
-  try {
-    const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/edu/' + url);
-  } catch (e) {
-    res.status(400).send('Invalid URL');
-  }
-});
-
-app.get('/uv/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
