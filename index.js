@@ -14,7 +14,8 @@ const server = http.createServer();
 const app = express();
 const bareServer = createBareServer("/edu/", {
   logLevel: "info",
-  localAddress: "0.0.0.0"
+  localAddress: "0.0.0.0",
+  directory: "/bare/"
 });
 
 const uv = new Ultraviolet("https://raw.githubusercontent.com/titaniumnetwork-dev/Ultraviolet-Static/main/uv/uv.config.js");
