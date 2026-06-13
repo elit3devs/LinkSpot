@@ -13,7 +13,8 @@ const server = http.createServer();
 const app = express();
 
 const bareServer = createBareServer("/", {
-  keepAlive: false
+  keepAlive: false,
+  connectionLimit: 1000
 });
 
 const PORT = process.env.PORT || 80;
