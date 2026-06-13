@@ -314,6 +314,7 @@
       <select id="proxy-select" class="btn" onchange="changeProxy()">
         <option value="bare">Bare Server</option>
         <option value="scramjet">Scramjet</option>
+        <option value="uv">Ultraviolet</option>
       </select>
     </div>
     <iframe id="f" src=""></iframe>
@@ -363,9 +364,11 @@
       currentUrl = url;
       let finalUrl;
       if (currentProxy === 'bare') {
-        finalUrl = "/edu/" + encodeURIComponent(url);
+        finalUrl = "/edu/" + url.split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join('');
       } else if (currentProxy === 'scramjet') {
         finalUrl = "/scramjet/" + btoa(url);
+      } else if (currentProxy === 'uv') {
+        finalUrl = "/uv/" + btoa(url);
       }
       f.src = finalUrl;
       v.style.display = 'flex';

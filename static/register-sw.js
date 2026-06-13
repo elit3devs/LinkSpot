@@ -1,18 +1,8 @@
 "use strict";
-/**
- * Service worker registration for LinkSpot
- */
 const stockSW = "/sw.js";
 
-/**
- * List of hostnames that are allowed to run serviceworkers on http:
- */
 const swAllowedHostnames = ["localhost", "127.0.0.1"];
 
-/**
- * Global util
- * Used in 404.html and index.html
- */
 async function registerSW() {
   if (
     location.protocol !== "https:" &&
@@ -23,6 +13,5 @@ async function registerSW() {
   if (!navigator.serviceWorker)
     throw new Error("Your browser doesn't support service workers.");
 
-  // Register the main service worker
   await navigator.serviceWorker.register(stockSW);
 }
