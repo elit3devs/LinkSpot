@@ -36,9 +36,21 @@ self.addEventListener('activate', function (e) {
 });
 
 self.addEventListener('fetch', function (e) {
+  // Don't cache proxy requests
+  if (e.request.url.startsWith('/edu/') || e.request.url.startsWith('/cdn/')) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+
   e.respondWith(
     caches.match(e.request).then(function (response) {
-      return response || fetch(e.request);
+      if (response) {
+        return response;
+      }
+      return fetch(e.request).catch(function() {
+        // Return a basic offline response if fetch fails
+        return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
+      });
     })
   );
 });

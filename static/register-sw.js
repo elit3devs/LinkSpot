@@ -1,8 +1,8 @@
 "use strict";
 /**
- * Distributed with Ultraviolet and compatible with most configurations.
+ * Service worker registration for LinkSpot
  */
-const stockSW = "/uv-sw.js";
+const stockSW = "/sw.js";
 
 /**
  * List of hostnames that are allowed to run serviceworkers on http:
@@ -23,8 +23,6 @@ async function registerSW() {
   if (!navigator.serviceWorker)
     throw new Error("Your browser doesn't support service workers.");
 
-  // Ultraviolet has a stock `sw.js` script.
-  await navigator.serviceWorker.register(stockSW, {
-    scope: __uv$config.prefix,
-  });
+  // Register the main service worker
+  await navigator.serviceWorker.register(stockSW);
 }

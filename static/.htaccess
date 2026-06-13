@@ -1,0 +1,40 @@
+# Block access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|json|xml|yml|yaml|env|config)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+# Block directory listing
+Options -Indexes
+
+# Allow only specific file types
+<FilesMatch "\.(html|png|jpg|jpeg|gif|svg|ico|js|css|woff|woff2|ttf)$">
+  Order Allow,Deny
+  Allow from all
+</FilesMatch>
+
+# Block access to all other files
+<FilesMatch ".*">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+# Set proper MIME types
+AddType application/javascript .js
+AddType text/css .css
+AddType text/html .html
+AddType image/png .png
+AddType image/jpeg .jpg
+AddType image/gif .gif
+AddType image/svg+xml .svg
+
+# Clean URLs - remove .html extension
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# Redirect /index to /
+RewriteCond %{THE_REQUEST} /index\.html [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkSpot AI</title>
+    <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-deep: #050a0a;
             --bg-gradient: radial-gradient(circle at top right, #0d1a1a, #050a0a);
-            --accent: #34d399;
+            --accent: #2E8B57;
             --text: #e2e8f0;
             --text-dim: #94a3b8;
         }
@@ -21,8 +21,9 @@
             background: var(--bg-deep);
             background-image: var(--bg-gradient);
             color: var(--text);
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
+            padding-top: 72px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,6 +59,62 @@
             text-decoration: underline;
         }
 
+        .ls-top-bar {
+          height: 60px;
+          width: 100%;
+          background: #0a0a0a;
+          border-bottom: 1px solid #1a1a1a;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 32px;
+          z-index: 9999;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+        }
+
+        .ls-brand {
+          font-weight: 700;
+          font-size: 1.1rem;
+          letter-spacing: -0.5px;
+          color: #fff;
+          user-select: none;
+          margin-right: 40px;
+          text-decoration: none;
+        }
+
+        .ls-nav-links {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .ls-nav-link {
+          padding: 8px 16px;
+          background: transparent;
+          border: none;
+          border-radius: 4px;
+          color: #888;
+          font-size: 0.85rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          text-decoration: none;
+        }
+
+        .ls-nav-link:hover {
+          background: #1a1a1a;
+          color: #fff;
+        }
+
+        .ls-nav-link.active {
+          background: var(--accent);
+          color: #fff;
+        }
+
+
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             p { font-size: 1rem; }
@@ -73,11 +130,22 @@
     </style>
 </head>
 <body>
+  <header class="ls-top-bar">
+    <a href="/" class="ls-brand">Link Spot</a>
+    <div class="ls-nav-links">
+      <a href="/" class="ls-nav-link">Home</a>
+      <a href="g" class="ls-nav-link">Games</a>
+      <a href="a" class="ls-nav-link">Apps</a>
+      <a href="s" class="ls-nav-link">Settings</a>
+    </div>
+  </header>
+
+
     <div class="coming-soon-container">
         <h1>AI Chat</h1>
-        <p>Coming Soon</p>
-        <p>Elit3 is working on bringing you a awesome experience with an ai chatbot. Stay tuned!</p>
-        <a href="index.html" class="back-link">← Back to Home</a>
+        <p>AI Assistant Coming Soon</p>
+        <p>Our AI chatbot is currently being developed. Check back later for updates!</p>
+        <a href="/" class="back-link">← Back to Home</a>
     </div>
 
     <script>

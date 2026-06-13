@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Westbrook High School - Student Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f8f9fa;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+    .header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e3a5f;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+    }
+    .nav a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav a:hover {
+      color: white;
+    }
+    .hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2E8B57 100%);
+      color: white;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      font-weight: 400;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1e3a5f;
+      margin-bottom: 24px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #e5e7eb;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #1e3a5f, #2E8B57);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+    .card h3 {
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .card p {
+      color: #6b7280;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .announcement {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 1px solid #f59e0b;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .announcement h3 {
+      color: #92400e;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .announcement p {
+      color: #78350f;
+      font-size: 0.9rem;
+    }
+    .footer {
+      background: #1e3a5f;
+      color: white;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .footer p {
+      opacity: 0.8;
+      font-size: 0.85rem;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .footer-links a:hover {
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .nav { display: none; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">W</div>
+      <span>Westhost High School</span>
+    </div>
+    <div class="nav">
+      <a href="#">Home</a>
+      <a href="#">Students</a>
+      <a href="#">Parents</a>
+      <a href="#">Staff</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  
+  <div class="hero">
+    <div class="hero-badge">🎓 Excellence in Education Since 1985</div>
+    <h1>Welcome to Westbrook High School</h1>
+    <p>Empowering Students to Achieve Their Full Potential</p>
+  </div>
+  
+  <div class="content">
+    <div class="announcement">
+      <h3>📢 Important Announcement</h3>
+      <p>Spring Semester registration is now open. Please contact the guidance office for more information.</p>
+    </div>
+    
+    <h2 class="section-title">Student Resources</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h3>Student Portal</h3>
+        <p>Access grades, assignments, schedules, and attendance records securely online.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📖</div>
+        <h3>Library Resources</h3>
+        <p>Digital books, research databases, and study materials available 24/7.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📅</div>
+        <h3>Academic Calendar</h3>
+        <p>View important dates, holidays, exam schedules, and school events.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏀</div>
+        <h3>Athletics</h3>
+        <p>Sports schedules, team rosters, and tryout information for all athletic programs.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎨</div>
+        <h3>Arts & Programs</h3>
+        <p>Visual arts, music, drama, and extracurricular activities and clubs.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🍎</div>
+        <h3>Cafeteria Menu</h3>
+        <p>Daily lunch menus, nutritional information, and meal payment options.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Accessibility</a>
+    </div>
+    <p>&copy; 2026 Westbrook High School. All rights reserved.</p>
+    <p>1234 Education Boulevard, Westbrook, CA 90210 | (555) 123-4567</p>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = 'index';
+    }, 2000);
+  </script>
+</body>
+</html>

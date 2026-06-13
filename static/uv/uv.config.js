@@ -4,7 +4,7 @@
 let storedBare = null;
 
 
-const defaultBareServer = '/edu/';
+const defaultBareServer = 'https://bare.titaniumnetwork.org/';
 let effectiveBare = defaultBareServer;
 
 if (typeof localStorage !== 'undefined') {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LinkSpot Apps</title>
+  <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -11,7 +11,7 @@
       --bg-gradient: radial-gradient(circle at top right, #0d1a1a, #050a0a);
       --glass: rgba(255, 255, 255, 0.02);
       --glass-border: rgba(255, 255, 255, 0.08);
-      --accent: #34d399;
+      --accent: #2E8B57;
       --text: #e2e8f0;
       --text-dim: #94a3b8;
       --header-height: 52px;
@@ -26,60 +26,61 @@
       color: var(--text);
       min-height: 100vh;
       width: 100vw;
+      padding-top: 72px;
     }
 
     .ls-top-bar {
-      height: var(--header-height);
+      height: 60px;
       width: 100%;
-      background: rgba(5, 10, 10, 0.6);
-      backdrop-filter: blur(40px) saturate(150%);
-      -webkit-backdrop-filter: blur(40px) saturate(150%);
-      border-bottom: 1px solid var(--glass-border);
+      background: #0a0a0a;
+      border-bottom: 1px solid #1a1a1a;
       display: flex;
       align-items: center;
-      padding: 0 16px;
-      gap: 20px;
+      justify-content: space-between;
+      padding: 0 24px;
       z-index: 9999;
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
     }
 
     .ls-brand {
-      font-weight: 800;
-      font-size: 0.95rem;
+      font-weight: 700;
+      font-size: 1.1rem;
       letter-spacing: -0.5px;
-      color: var(--accent);
+      color: #fff;
       user-select: none;
+      text-decoration: none;
     }
 
     .ls-nav-links {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 4px;
     }
 
     .ls-nav-link {
       padding: 8px 16px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 6px;
-      color: var(--text-dim);
-      font-size: 0.8rem;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      color: #888;
+      font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       text-decoration: none;
     }
 
     .ls-nav-link:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--accent);
-      color: var(--accent);
+      background: #1a1a1a;
+      color: #fff;
     }
 
     .ls-nav-link.active {
-      background: rgba(52, 211, 153, 0.1);
-      border-color: rgba(52, 211, 153, 0.3);
-      color: var(--accent);
+      background: var(--accent);
+      color: #fff;
     }
 
     .apps-container {
@@ -156,11 +157,6 @@
       color: var(--text-dim);
     }
 
-    .simple-nav { display: flex; gap: 10px; padding: 15px; background: #0a0f0f; border-bottom: 1px solid #2a3a3a; }
-    .simple-nav a { color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; }
-    .simple-nav a:hover { background: #1a2626; }
-    .simple-nav a.active { background: var(--accent); color: #000; }
-
     #view { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-deep); display: none; flex-direction: column; z-index: 9999; }
     .bar { padding: 15px; background: #0a0f0f; display: flex; gap: 10px; border-bottom: 1px solid #2a3a3a; }
     .btn { background: #1a2626; border: 1px solid #2a3a3a; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 800; }
@@ -174,8 +170,6 @@
       .app-icon svg { width: 32px; height: 32px; }
       .app-name { font-size: 0.9rem; }
       .app-category { font-size: 0.65rem; }
-      .simple-nav { padding: 10px; gap: 6px; }
-      .simple-nav a { font-size: 12px; padding: 6px 12px; }
     }
 
     @media (max-width: 480px) {
@@ -185,17 +179,19 @@
       .app-card { padding: 12px; }
       .app-icon svg { width: 28px; height: 28px; }
       .app-name { font-size: 0.85rem; }
-      .simple-nav a { font-size: 11px; padding: 5px 10px; }
     }
   </style>
 </head>
 <body>
-  <nav class="simple-nav">
-    <a href="index.html">Home</a>
-    <a href="g.html">Games</a>
-    <a href="a.html" class="active">Apps</a>
-    <a href="s.html">Settings</a>
-  </nav>
+  <header class="ls-top-bar">
+    <a href="/" class="ls-brand">Link Spot</a>
+    <div class="ls-nav-links">
+      <a href="/" class="ls-nav-link">Home</a>
+      <a href="g" class="ls-nav-link">Games</a>
+      <a href="a" class="ls-nav-link active">Apps</a>
+      <a href="s" class="ls-nav-link">Settings</a>
+    </div>
+  </header>
 
   <div class="apps-container">
     <div class="apps-header">
@@ -315,6 +311,10 @@
       <button class="btn" onclick="cls()">CLOSE</button>
       <button class="btn" onclick="fs()">FULLSCREEN</button>
       <button class="btn" onclick="tab()">OPEN TAB</button>
+      <select id="proxy-select" class="btn" onchange="changeProxy()">
+        <option value="bare">Bare Server</option>
+        <option value="scramjet">Scramjet</option>
+      </select>
     </div>
     <iframe id="f" src=""></iframe>
   </div>
@@ -349,12 +349,33 @@
     const v = document.getElementById('view');
     const f = document.getElementById('f');
 
+    let currentProxy = 'bare';
+    let currentUrl = '';
+
+    function changeProxy() {
+      currentProxy = document.getElementById('proxy-select').value;
+      if (currentUrl) {
+        loadApp(currentUrl);
+      }
+    }
+
+    function loadApp(url) {
+      currentUrl = url;
+      let finalUrl;
+      if (currentProxy === 'bare') {
+        finalUrl = "/edu/" + encodeURIComponent(url);
+      } else if (currentProxy === 'scramjet') {
+        finalUrl = "/scramjet/" + btoa(url);
+      }
+      f.src = finalUrl;
+      v.style.display = 'flex';
+    }
+
     cards.forEach(card => {
       card.addEventListener('click', (e) => {
         e.preventDefault();
         const href = card.getAttribute('href');
-        f.src = href;
-        v.style.display = 'flex';
+        loadApp(href);
       });
     });
 

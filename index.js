@@ -13,10 +13,11 @@ const __dirname = process.cwd();
 const server = http.createServer();
 const app = express();
 const bareServer = createBareServer("/edu/", {
-  logLevel: "silent",
+  logLevel: "info",
   localAddress: "0.0.0.0"
 });
-const PORT = process.env.PORT || 8000;
+
+const PORT = process.env.PORT || 80;
 
 // Authentication Logic
 if (config.challenge !== false) {
@@ -40,12 +41,24 @@ app.use(
   }),
 );
 
+// Scramjet proxy endpoint (redirect to bare server)
+app.get('/scramjet/*', (req, res) => {
+  const encodedUrl = req.params[0];
+  try {
+    const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
+    res.redirect('/edu/' + encodeURIComponent(url));
+  } catch (e) {
+    res.status(400).send('Invalid URL');
+  }
+});
+
 // 404 Handler
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "static", "404.html"));
 });
 
 server.on("request", (req, res) => {
+  // Allow localhost through proxy
   if (bareServer.shouldRoute(req)) {
     bareServer.routeRequest(req, res);
   } else {

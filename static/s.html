@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LinkSpot Settings</title>
+  <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -11,7 +11,7 @@
       --bg-gradient: radial-gradient(circle at top right, #0d1a1a, #050a0a);
       --glass: rgba(255, 255, 255, 0.02);
       --glass-border: rgba(255, 255, 255, 0.08);
-      --accent: #34d399;
+      --accent: #2E8B57;
       --text: #e2e8f0;
       --text-dim: #94a3b8;
       --header-height: 52px;
@@ -26,78 +26,78 @@
       color: var(--text);
       min-height: 100vh;
       width: 100vw;
+      padding-top: 72px;
     }
 
     .ls-top-bar {
-      height: var(--header-height);
+      height: 60px;
       width: 100%;
-      background: rgba(5, 10, 10, 0.6);
-      backdrop-filter: blur(40px) saturate(150%);
-      -webkit-backdrop-filter: blur(40px) saturate(150%);
-      border-bottom: 1px solid var(--glass-border);
+      background: #0a0a0a;
+      border-bottom: 1px solid #1a1a1a;
       display: flex;
       align-items: center;
-      padding: 0 16px;
-      gap: 20px;
+      justify-content: space-between;
+      padding: 0 24px;
       z-index: 9999;
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
     }
 
     .ls-brand {
-      font-weight: 800;
-      font-size: 0.95rem;
+      font-weight: 700;
+      font-size: 1.1rem;
       letter-spacing: -0.5px;
-      color: var(--accent);
+      color: #fff;
       user-select: none;
+      text-decoration: none;
     }
 
     .ls-nav-links {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 4px;
     }
 
     .ls-nav-link {
       padding: 8px 16px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 6px;
-      color: var(--text-dim);
-      font-size: 0.8rem;
+      background: transparent;
+      border: none;
+      border-radius: 4px;
+      color: #888;
+      font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       text-decoration: none;
     }
 
     .ls-nav-link:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--accent);
-      color: var(--accent);
+      background: #1a1a1a;
+      color: #fff;
     }
 
     .ls-nav-link.active {
-      background: rgba(52, 211, 153, 0.1);
-      border-color: rgba(52, 211, 153, 0.3);
-      color: var(--accent);
+      background: var(--accent);
+      color: #fff;
     }
 
     .settings-container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 60px 20px;
     }
 
     .settings-header {
-      text-align: center;
       margin-bottom: 40px;
     }
 
     .settings-header h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--accent);
-      margin-bottom: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
     }
 
     .settings-header p {
@@ -281,8 +281,6 @@
       .setting-label p { font-size: 0.7rem; }
       .color-option { width: 28px; height: 28px; }
       .input-field { font-size: 14px; padding: 8px 12px; }
-      .simple-nav { padding: 10px; gap: 6px; }
-      .simple-nav a { font-size: 12px; padding: 6px 12px; }
     }
 
     @media (max-width: 480px) {
@@ -291,17 +289,19 @@
       .setting-item { flex-direction: column; align-items: flex-start; gap: 8px; }
       .color-picker { gap: 8px; }
       .color-option { width: 24px; height: 24px; }
-      .simple-nav a { font-size: 11px; padding: 5px 10px; }
     }
   </style>
 </head>
 <body>
-  <nav class="simple-nav">
-    <a href="index.html">Home</a>
-    <a href="g.html">Games</a>
-    <a href="a.html">Apps</a>
-    <a href="s.html" class="active">Settings</a>
-  </nav>
+  <header class="ls-top-bar">
+    <a href="/" class="ls-brand">Link Spot</a>
+    <div class="ls-nav-links">
+      <a href="/" class="ls-nav-link">Home</a>
+      <a href="g" class="ls-nav-link">Games</a>
+      <a href="a" class="ls-nav-link">Apps</a>
+      <a href="s" class="ls-nav-link active">Settings</a>
+    </div>
+  </header>
 
   <div class="settings-container">
     <div class="settings-header">
@@ -354,6 +354,27 @@
         </div>
       </div>
     </div>
+
+    <div class="settings-section">
+      <h2>🌐 Proxy</h2>
+      <div class="setting-item">
+        <div class="setting-label">
+          <h3>Proxy Service</h3>
+          <p>Select which proxy to use for browsing</p>
+        </div>
+        <div class="setting-control">
+          <select class="input-field" id="proxy-service">
+            <option value="bare">Bare Server</option>
+            <option value="scramjet">Scramjet</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h2>🔒 Security</h2>
+      <div class="setting-item">
+        <div class="setting-label">
           <h3>Open in about:blank</h3>
           <p>Open sites in about:blank for more privacy</p>
         </div>
@@ -361,7 +382,6 @@
           <div class="toggle-switch" id="about-blank-toggle"></div>
         </div>
       </div>
-    </div>
 
     <div class="settings-section">
       <h2>⌨️ Panic Key</h2>

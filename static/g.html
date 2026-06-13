@@ -3,16 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkSpot | Arcade</title>
+    <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
     <style>
         :root {
             --bg: #0f1717;
-            --emerald: #34d399;
+            --emerald: #2E8B57;
             --card: #141d1d;
             --border: #1a2626;
+            --glass: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-dim: #94a3b8;
+            --header-height: 52px;
         }
 
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 72px 20px 40px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        
+        .ls-top-bar {
+          height: 60px;
+          width: 100%;
+          background: #0a0a0a;
+          border-bottom: 1px solid #1a1a1a;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 24px;
+          z-index: 9999;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+        }
+
+        .ls-brand {
+          font-weight: 700;
+          font-size: 1.1rem;
+          letter-spacing: -0.5px;
+          color: #fff;
+          user-select: none;
+          text-decoration: none;
+        }
+
+        .ls-nav-links {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .ls-nav-link {
+          padding: 8px 16px;
+          background: transparent;
+          border: none;
+          border-radius: 4px;
+          color: #888;
+          font-size: 0.85rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          text-decoration: none;
+        }
+
+        .ls-nav-link:hover {
+          background: #1a1a1a;
+          color: #fff;
+        }
+
+        .ls-nav-link.active {
+          background: var(--emerald);
+          color: #fff;
+        }
+
         h1 { color: var(--emerald); font-size: 2.5rem; font-weight: 900; margin-bottom: 30px; letter-spacing: -1px; }
         #find { width: 100%; max-width: 500px; padding: 15px; background: var(--card); border: 2px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 50px; outline: none; }
         #find:focus { border-color: var(--emerald); }
@@ -29,10 +88,6 @@
         .btn { background: #1a2626; border: 1px solid #2a3a3a; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 800; }
         .btn:hover { background: var(--emerald); color: #000; }
         iframe { flex: 1; border: none; width: 100%; }
-        .simple-nav { display: flex; gap: 10px; padding: 15px; background: #0a0f0f; border-bottom: 1px solid #2a3a3a; }
-        .simple-nav a { color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; }
-        .simple-nav a:hover { background: #1a2626; }
-        .simple-nav a.active { background: var(--emerald); color: #000; }
 
         @media (max-width: 768px) {
             h1 { font-size: 1.5rem; }
@@ -54,19 +109,32 @@
     </style>
 </head>
 <body>
-    <nav class="simple-nav">
-        <a href="index.html">Home</a>
-        <a href="g.html" class="active">Games</a>
-        <a href="a.html">Apps</a>
-        <a href="s.html">Settings</a>
-    </nav>
+  <header class="ls-top-bar">
+    <a href="/" class="ls-brand">Link Spot</a>
+    <div class="ls-nav-links">
+      <a href="/" class="ls-nav-link">Home</a>
+      <a href="g" class="ls-nav-link active">Games</a>
+      <a href="a" class="ls-nav-link">Apps</a>
+      <a href="s" class="ls-nav-link">Settings</a>
+    </div>
+  </header>
 
     <h1>LinkSpot</h1>
     <input type="text" id="find" placeholder="SEARCH">
 
     <div class="grid">
+        <div class="card" data-s="https://infinite-craft.gg/"><div class="img" style="background-image: url('images/Infinite Craft.png')"></div><div class="name">Infinite Craft</div></div>
+        <div class="card" data-s="games/Subway Surfers.html"><div class="img" style="background-image: url('images/Subway Surfers.png')"></div><div class="name">Subway Surfers</div></div>
         <div class="card" data-s="https://1v1.lol"><div class="img" style="background-image: url('images/1v1-lol.png')"></div><div class="name">1v1 LoL</div></div>
         <div class="card" data-s="https://slope-game.io"><div class="img" style="background-image: url('images/Slope.png')"></div><div class="name">Slope</div></div>
+        <div class="card" data-s="https://crazygames.com/game/brain-test-3-tricky-quests"><div class="img" style="background-image: url('images/Brain Test.png')"></div><div class="name">Brain Test 3</div></div>
+        <div class="card" data-s="https://crazygames.com/game/retro-bowl"><div class="img" style="background-image: url('images/Retro Bowl.png')"></div><div class="name">Retro Bowl</div></div>
+        <div class="card" data-s="https://crazygames.com/game/stack"><div class="img" style="background-image: url('images/Stack.png')"></div><div class="name">Stack</div></div>
+        <div class="card" data-s="https://crazygames.com/game/moto-x3m"><div class="img" style="background-image: url('images/Moto X3M.png')"></div><div class="name">Moto X3M</div></div>
+        <div class="card" data-s="https://crazygames.com/game/cookie-clicker"><div class="img" style="background-image: url('images/Cookie Clicker.png')"></div><div class="name">Cookie Clicker</div></div>
+        <div class="card" data-s="https://crazygames.com/game/temple-run-2"><div class="img" style="background-image: url('images/Temple Run 2.png')"></div><div class="name">Temple Run 2</div></div>
+        <div class="card" data-s="https://crazygames.com/game/geometry-dash"><div class="img" style="background-image: url('images/Geometry Dash.png')"></div><div class="name">Geometry Dash</div></div>
+        <div class="card" data-s="https://crazygames.com/game/2048"><div class="img" style="background-image: url('images/2048.png')"></div><div class="name">2048</div></div>
         
         <div class="card" data-s="https://roblox.com"><div class="img" style="background-image: url('images/Bank Robbery.png')"></div><div class="name">Roblox</div></div>
         <div class="card" data-s="https://poki.com"><div class="img" style="background-image: url('images/Escape Road.png')"></div><div class="name">Poki Games</div></div>
@@ -133,6 +201,9 @@
         <div class="card" data-s="https://poki.com/en/run"><div class="img" style="background-image: url('images/Run 3.png')"></div><div class="name">Run 3</div></div>
         <div class="card" data-s="https://poki.com"><div class="img" style="background-image: url('images/Steal A Brainrot.png')"></div><div class="name">Poki All</div></div>
         <div class="card" data-s="https://coolmathgames.com/0-idle-breakout"><div class="img" style="background-image: url('images/Idle Breakout.png')"></div><div class="name">Idle Breakout</div></div>
+        <div class="card" data-s="https://eaglercraft.com/play"><div class="img" style="background: linear-gradient(135deg, #4a90a4, #2d5a6b);"></div><div class="name">Eaglercraft</div></div>
+        <div class="card" data-s="https://deadshot.io/"><div class="img" style="background: linear-gradient(135deg, #e74c3c, #c0392b);"></div><div class="name">Deadshot</div></div>
+        <div class="card" data-s="https://tungsahur-clicker.com/"><div class="img" style="background: linear-gradient(135deg, #f39c12, #d68910);"></div><div class="name">Tungtungsahur Clicker</div></div>
     </div>
 
     <div id="view">
@@ -140,6 +211,10 @@
             <button class="btn" onclick="cls()">CLOSE</button>
             <button class="btn" onclick="fs()">FULLSCREEN</button>
             <button class="btn" onclick="tab()">OPEN TAB</button>
+            <select id="proxy-select" class="btn" onchange="changeProxy()">
+                <option value="bare">Bare Server</option>
+                <option value="scramjet">Scramjet</option>
+            </select>
         </div>
         <iframe id="f" src=""></iframe>
     </div>
@@ -177,11 +252,32 @@
             });
         };
 
+        let currentProxy = 'bare';
+        let currentUrl = '';
+
+        function changeProxy() {
+            currentProxy = document.getElementById('proxy-select').value;
+            if (currentUrl) {
+                loadGame(currentUrl);
+            }
+        }
+
+        function loadGame(url) {
+            currentUrl = url;
+            let finalUrl;
+            if (currentProxy === 'bare') {
+                finalUrl = "/edu/" + encodeURIComponent(url);
+            } else if (currentProxy === 'scramjet') {
+                finalUrl = "/scramjet/" + btoa(url);
+            }
+            f.src = finalUrl;
+            v.style.display = 'flex';
+        }
+
         cards.forEach(c => {
             c.onclick = () => { 
                 const gameUrl = c.dataset.s;
-                f.src = gameUrl;
-                v.style.display = 'flex'; 
+                loadGame(gameUrl);
             };
         });
 

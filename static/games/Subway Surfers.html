@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subway Surfers</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0f1717;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #gameCanvas {
+      border: 2px solid #2E8B57;
+      border-radius: 8px;
+    }
+    .controls {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .controls p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+    .controls span {
+      color: #2E8B57;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+  <div class="controls">
+    <p>Controls: <span>WASD</span> or <span>Arrow Keys</span> to move</p>
+    <p>Press <span>Space</span> to jump</p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Game state
+    let player = { x: 175, y: 500, width: 50, height: 70, lane: 1 };
+    let obstacles = [];
+    let coins = [];
+    let score = 0;
+    let gameSpeed = 5;
+    let isGameOver = false;
+
+    // Lane positions
+    const lanes = [75, 175, 275];
+
+    // Controls
+    const keys = {};
+    document.addEventListener('keydown', (e) => {
+      keys[e.key] = true;
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', ' '].includes(e.key)) {
+        e.preventDefault();
+      }
+    });
+    document.addEventListener('keyup', (e) => keys[e.key] = false);
+
+    function movePlayer() {
+      if (keys['ArrowLeft'] || keys['a']) {
+        if (player.lane > 0) player.lane--;
+        keys['ArrowLeft'] = keys['a'] = false;
+      }
+      if (keys['ArrowRight'] || keys['d']) {
+        if (player.lane < 2) player.lane++;
+        keys['ArrowRight'] = keys['d'] = false;
+      }
+      if (keys['ArrowUp'] || keys['w'] || keys[' ']) {
+        player.y = 450;
+        setTimeout(() => player.y = 500, 300);
+        keys['ArrowUp'] = keys['w'] = keys[' '] = false;
+      }
+      player.x = lanes[player.lane] - player.width / 2;
+    }
+
+    function spawnObstacle() {
+      if (Math.random() < 0.02) {
+        const lane = Math.floor(Math.random() * 3);
+        obstacles.push({
+          x: lanes[lane] - 25,
+          y: -50,
+          width: 50,
+          height: 50,
+          lane: lane
+        });
+      }
+    }
+
+    function spawnCoin() {
+      if (Math.random() < 0.03) {
+        const lane = Math.floor(Math.random() * 3);
+        coins.push({
+          x: lanes[lane] - 15,
+          y: -30,
+          width: 30,
+          height: 30,
+          lane: lane
+        });
+      }
+    }
+
+    function updateObstacles() {
+      obstacles.forEach((obs, index) => {
+        obs.y += gameSpeed;
+        if (obs.y > canvas.height) {
+          obstacles.splice(index, 1);
+          score += 10;
+        }
+      });
+    }
+
+    function updateCoins() {
+      coins.forEach((coin, index) => {
+        coin.y += gameSpeed;
+        if (coin.y > canvas.height) {
+          coins.splice(index, 1);
+        }
+      });
+    }
+
+    function checkCollisions() {
+      obstacles.forEach(obs => {
+        if (player.x < obs.x + obs.width &&
+            player.x + player.width > obs.x &&
+            player.y < obs.y + obs.height &&
+            player.y + player.height > obs.y) {
+          isGameOver = true;
+        }
+      });
+
+      coins.forEach((coin, index) => {
+        if (player.x < coin.x + coin.width &&
+            player.x + player.width > coin.x &&
+            player.y < coin.y + coin.height &&
+            player.y + player.height > coin.y) {
+          coins.splice(index, 1);
+          score += 50;
+        }
+      });
+    }
+
+    function draw() {
+      // Clear canvas
+      ctx.fillStyle = '#0f1717';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw lanes
+      ctx.strokeStyle = '#1a2626';
+      ctx.lineWidth = 2;
+      for (let i = 1; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * 133, 0);
+        ctx.lineTo(i * 133, canvas.height);
+        ctx.stroke();
+      }
+
+      // Draw player
+      ctx.fillStyle = '#2E8B57';
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+
+      // Draw obstacles
+      ctx.fillStyle = '#ef4444';
+      obstacles.forEach(obs => {
+        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+      });
+
+      // Draw coins
+      ctx.fillStyle = '#fbbf24';
+      coins.forEach(coin => {
+        ctx.beginPath();
+        ctx.arc(coin.x + coin.width/2, coin.y + coin.height/2, 15, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Draw score
+      ctx.fillStyle = '#fff';
+      ctx.font = '24px Inter';
+      ctx.fillText('Score: ' + score, 10, 30);
+
+      if (isGameOver) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.font = '36px Inter';
+        ctx.fillText('Game Over!', 100, 300);
+        ctx.font = '20px Inter';
+        ctx.fillText('Press R to restart', 115, 340);
+      }
+    }
+
+    function gameLoop() {
+      if (!isGameOver) {
+        movePlayer();
+        spawnObstacle();
+        spawnCoin();
+        updateObstacles();
+        updateCoins();
+        checkCollisions();
+      }
+
+      if (isGameOver && keys['r']) {
+        isGameOver = false;
+        obstacles = [];
+        coins = [];
+        score = 0;
+        player.lane = 1;
+        player.x = lanes[1] - player.width / 2;
+        player.y = 500;
+      }
+
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
+</body>
+</html>

@@ -5,7 +5,7 @@ async function loadsw(){
       alert(err.toString());
       throw err;
     }
-    const url = search("", "");
+    const url = search("", "https://search.brave.com/search?q=%s");
   
               var iframe = document.createElement('iframe');
   
@@ -18,7 +18,7 @@ async function loadsw(){
               iframe.id = "iframe";
               iframe.style.zIndex="9999999999999999";
               iframe.style.border = "none";
-              iframe.src = __uv$config.prefix + __uv$config.encodeUrl(url);
+              iframe.src = "/edu/" + encodeURIComponent(url);
               document.body.appendChild(iframe);
   
     function inIframe () {

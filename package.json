@@ -15,6 +15,8 @@
   "author": "Lorem Group US",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@mercuryworkshop/scramjet-utils": "^0.0.3",
+    "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "@tomphttp/bare-server-node": "^2.0.2",
     "chalk": "^5.4.1",
     "cookie-parser": "^1.4.7",
