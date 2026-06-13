@@ -523,8 +523,8 @@
 
     document.getElementById('add-tab').onclick = () => createNode();
     
-    // Only create initial node if container is empty
-    if (document.getElementById('ls-tab-container').children.length === 0) {
+    // Only create initial node if not already initialized
+    if (!initialized) {
       createNode();
     }
 
