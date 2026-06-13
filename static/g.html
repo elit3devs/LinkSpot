@@ -211,11 +211,6 @@
             <button class="btn" onclick="cls()">CLOSE</button>
             <button class="btn" onclick="fs()">FULLSCREEN</button>
             <button class="btn" onclick="tab()">OPEN TAB</button>
-            <select id="proxy-select" class="btn" onchange="changeProxy()">
-                <option value="bare">Bare Server</option>
-                <option value="scramjet">Scramjet</option>
-                <option value="uv">Ultraviolet</option>
-            </select>
         </div>
         <iframe id="f" src=""></iframe>
     </div>
@@ -256,24 +251,9 @@
         let currentProxy = 'bare';
         let currentUrl = '';
 
-        function changeProxy() {
-            currentProxy = document.getElementById('proxy-select').value;
-            if (currentUrl) {
-                loadGame(currentUrl);
-            }
-        }
-
         function loadGame(url) {
             currentUrl = url;
-            let finalUrl;
-            if (currentProxy === 'bare') {
-                finalUrl = "/edu/" + url;
-            } else if (currentProxy === 'scramjet') {
-                finalUrl = "/scramjet/" + btoa(url);
-            } else if (currentProxy === 'uv') {
-                finalUrl = "/uv/" + btoa(url);
-            }
-            f.src = finalUrl;
+            f.src = "/edu/" + url;
             v.style.display = 'flex';
         }
 

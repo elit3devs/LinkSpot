@@ -12,10 +12,8 @@ console.log(chalk.yellow("🚀 Starting server..."));
 const __dirname = process.cwd();
 const server = http.createServer();
 const app = express();
-const bareServer = createBareServer("/edu/", {
-  logLevel: "info",
-  localAddress: "0.0.0.0"
-});
+
+const bareServer = createBareServer("/edu/");
 
 const uv = new Ultraviolet("https://raw.githubusercontent.com/titaniumnetwork-dev/Ultraviolet-Static/main/uv/uv.config.js");
 
@@ -39,26 +37,6 @@ app.use(
     index: "index.html",
   }),
 );
-
-app.get('/scramjet/*', (req, res) => {
-  const encodedUrl = req.params[0];
-  try {
-    const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/edu/' + url);
-  } catch (e) {
-    res.status(400).send('Invalid URL');
-  }
-});
-
-app.get('/uv/*', (req, res) => {
-  const encodedUrl = req.params[0];
-  try {
-    const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/edu/' + url);
-  } catch (e) {
-    res.status(400).send('Invalid URL');
-  }
-});
 
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "static", "404.html"));

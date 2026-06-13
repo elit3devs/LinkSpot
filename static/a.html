@@ -311,11 +311,6 @@
       <button class="btn" onclick="cls()">CLOSE</button>
       <button class="btn" onclick="fs()">FULLSCREEN</button>
       <button class="btn" onclick="tab()">OPEN TAB</button>
-      <select id="proxy-select" class="btn" onchange="changeProxy()">
-        <option value="bare">Bare Server</option>
-        <option value="scramjet">Scramjet</option>
-        <option value="uv">Ultraviolet</option>
-      </select>
     </div>
     <iframe id="f" src=""></iframe>
   </div>
@@ -341,36 +336,15 @@
       document.documentElement.style.setProperty('--bg-gradient', `radial-gradient(circle at top right, ${settings.accentColor}33, #050a0a)`);
     }
 
-    function uvEncode(str) {
-      if (!str) return str;
-      return encodeURIComponent(str.split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join(''));
-    }
-
     const cards = document.querySelectorAll('.app-card');
     const v = document.getElementById('view');
     const f = document.getElementById('f');
 
-    let currentProxy = 'bare';
     let currentUrl = '';
-
-    function changeProxy() {
-      currentProxy = document.getElementById('proxy-select').value;
-      if (currentUrl) {
-        loadApp(currentUrl);
-      }
-    }
 
     function loadApp(url) {
       currentUrl = url;
-      let finalUrl;
-      if (currentProxy === 'bare') {
-        finalUrl = "/edu/" + url;
-      } else if (currentProxy === 'scramjet') {
-        finalUrl = "/scramjet/" + btoa(url);
-      } else if (currentProxy === 'uv') {
-        finalUrl = "/uv/" + btoa(url);
-      }
-      f.src = finalUrl;
+      f.src = "/edu/" + url;
       v.style.display = 'flex';
     }
 
