@@ -12,7 +12,7 @@ const __dirname = process.cwd();
 const server = http.createServer();
 const app = express();
 
-const bareServer = createBareServer("/bare/");
+const bareServer = createBareServer("/");
 
 const PORT = process.env.PORT || 80;
 
@@ -39,7 +39,7 @@ app.get('/scramjet/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/bare/' + url);
+    res.redirect('/' + encodeURIComponent(url));
   } catch (e) {
     res.status(400).send('Invalid URL');
   }
@@ -49,7 +49,7 @@ app.get('/uv/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/bare/' + url);
+    res.redirect('/' + encodeURIComponent(url));
   } catch (e) {
     res.status(400).send('Invalid URL');
   }

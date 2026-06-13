@@ -267,7 +267,7 @@
             currentUrl = url;
             let finalUrl;
             if (currentProxy === 'bare') {
-                finalUrl = "/bare/" + encodeURIComponent(url);
+                finalUrl = "/" + url;
             } else if (currentProxy === 'scramjet') {
                 finalUrl = "/scramjet/" + btoa(url);
             } else if (currentProxy === 'uv') {
