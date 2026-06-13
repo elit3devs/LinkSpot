@@ -12,7 +12,9 @@ const __dirname = process.cwd();
 const server = http.createServer();
 const app = express();
 
-const bareServer = createBareServer("/");
+const bareServer = createBareServer("/", {
+  keepAlive: false
+});
 
 const PORT = process.env.PORT || 80;
 
