@@ -20,7 +20,7 @@ async function loadsw(){
               iframe.id = "iframe";
               iframe.style.zIndex="9999999999999999";
               iframe.style.border = "none";
-              iframe.src = "/edu/" + encodeURIComponent(url);
+              iframe.src = "/bare/" + encodeURIComponent(url);
               document.body.appendChild(iframe);
     function wait(){
       window.location.reload(1);
