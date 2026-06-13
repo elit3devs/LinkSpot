@@ -511,7 +511,7 @@
       }
 
       const isInternal = !target.startsWith('http');
-      const finalUrl = isInternal ? target : "/bare/" + target;
+      const finalUrl = isInternal ? target : "/bare/" + encodeURIComponent(target);
       const node = ls_nodes.find(n => n.id === active_node_id);
       
       node.url = finalUrl;
