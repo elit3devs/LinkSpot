@@ -44,7 +44,7 @@ app.get('/scramjet/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/edu/' + url.split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join(''));
+    res.redirect('/edu/' + encodeURIComponent(url));
   } catch (e) {
     res.status(400).send('Invalid URL');
   }
@@ -54,7 +54,7 @@ app.get('/uv/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/edu/' + url.split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join(''));
+    res.redirect('/edu/' + encodeURIComponent(url));
   } catch (e) {
     res.status(400).send('Invalid URL');
   }

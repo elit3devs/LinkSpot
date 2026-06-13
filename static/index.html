@@ -511,7 +511,7 @@
       }
 
       const isInternal = !target.startsWith('http');
-      const finalUrl = isInternal ? target : "/edu/" + target.split('').map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char).join('');
+      const finalUrl = isInternal ? target : "/edu/" + encodeURIComponent(target);
       const node = ls_nodes.find(n => n.id === active_node_id);
       
       node.url = finalUrl;
