@@ -1,6 +1,7 @@
 import http from "node:http";
 import path from "node:path";
 import { createBareServer } from "@tomphttp/bare-server-node";
+import { Ultraviolet } from "@titaniumnetwork-dev/ultraviolet";
 import chalk from "chalk";
 import express from "express";
 import basicAuth from "express-basic-auth";
@@ -16,6 +17,8 @@ const bareServer = createBareServer("/", {
   keepAlive: false,
   connectionLimit: 1000
 });
+
+const uv = new Ultraviolet("https://raw.githubusercontent.com/titaniumnetwork-dev/Ultraviolet-Static/main/uv/uv.config.js");
 
 const PORT = process.env.PORT || 80;
 
