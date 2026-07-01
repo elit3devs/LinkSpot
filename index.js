@@ -5,6 +5,7 @@ import chalk from "chalk";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "./config.js";
+import fetch from "node-fetch";
 
 console.log(chalk.yellow("🚀 Starting server..."));
 
@@ -35,11 +36,45 @@ app.use(
   }),
 );
 
+app.get('/proxy/*', async (req, res) => {
+  const url = req.params[0];
+  try {
+    const response = await fetch(url);
+    const contentType = response.headers.get('content-type') || 'text/html';
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    
+    const body = await response.text();
+    // Modify HTML to handle relative URLs
+    if (contentType.includes('text/html')) {
+      let modifiedBody = body
+        .replace(/href=["']([^"']+)["']/g, (match, href) => {
+          if (href.startsWith('http') || href.startsWith('//')) return match;
+          if (href.startsWith('/')) return `href="${url}${href}"`;
+          return `href="${url}/${href}"`;
+        })
+        .replace(/src=["']([^"']+)["']/g, (match, src) => {
+          if (src.startsWith('http') || src.startsWith('//') || src.startsWith('data:')) return match;
+          if (src.startsWith('/')) return `src="${url}${src}"`;
+          return `src="${url}/${src}"`;
+        });
+      res.send(modifiedBody);
+    } else {
+      res.send(body);
+    }
+  } catch (e) {
+    console.error('Proxy error:', e);
+    res.status(500).send('Proxy error: ' + e.message);
+  }
+});
+
 app.get('/scramjet/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/bare/v2/' + url);
+    res.redirect('/proxy/' + url);
   } catch (e) {
     res.status(400).send('Invalid URL');
   }
@@ -49,7 +84,7 @@ app.get('/uv/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/bare/v2/' + url);
+    res.redirect('/proxy/' + url);
   } catch (e) {
     res.status(400).send('Invalid URL');
   }
