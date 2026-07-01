@@ -39,7 +39,7 @@ app.get('/scramjet/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/bare/' + url);
+    res.redirect('/bare/v2/' + url);
   } catch (e) {
     res.status(400).send('Invalid URL');
   }
@@ -49,7 +49,7 @@ app.get('/uv/*', (req, res) => {
   const encodedUrl = req.params[0];
   try {
     const url = Buffer.from(encodedUrl, 'base64').toString('utf-8');
-    res.redirect('/bare/' + url);
+    res.redirect('/bare/v2/' + url);
   } catch (e) {
     res.status(400).send('Invalid URL');
   }

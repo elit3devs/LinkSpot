@@ -359,7 +359,7 @@
       currentUrl = url;
       let finalUrl;
       if (currentProxy === 'bare') {
-        finalUrl = "/bare/" + url;
+        finalUrl = "/bare/v2/" + url;
       } else if (currentProxy === 'scramjet') {
         finalUrl = "/scramjet/" + btoa(url);
       } else if (currentProxy === 'uv') {
