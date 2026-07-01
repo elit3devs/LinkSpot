@@ -18,7 +18,7 @@ async function loadsw(){
               iframe.id = "iframe";
               iframe.style.zIndex="9999999999999999";
               iframe.style.border = "none";
-              iframe.src = "/bare/" + encodeURIComponent(url);
+              iframe.src = "/proxy/" + encodeURIComponent(url);
               document.body.appendChild(iframe);
   
     function inIframe () {
